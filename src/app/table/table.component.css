@@ -1,3 +1,11 @@
+.main-form {
+  background-color: hsl(150, 50%,90%);
+  border-radius: 10px;
+  box-shadow: 0 0 20px black;
+  margin: 50px 100px 50px 100px;
+  padding-bottom:50px;
+}
+
 .xml-form {
   text-align:center;
   padding-bottom: 50px;
@@ -11,19 +19,21 @@
 
 .xml-input {
   margin-bottom:20px;
-  width:40%;
+  width:70%;
 }
 
 .xml-button {
-  border: 1px solid black;
   padding: 10px;
   text-align: center;
   width:200px;
   margin: auto;
+  border-radius: 10px;
+  background-color: hsl(150, 50%,50%);
 }
 
 .xml-button:hover {
-  background-color: #ddd;
+  background-color: hsl(150, 50%,20%);
+  color:white;
 }
 
 .xml-hr {
@@ -45,27 +55,48 @@ td, th {
 
 tr:nth-child(even){background-color: #f2f2f2;}
 
+tr:nth-child(odd):not(:first-child){background-color: white;}
+
 .table-rows:hover {background-color: #ddd;}
 
-.table-header {background-color:hsl(150,50%,80%);}
+.table-header {background-color:hsl(40,100%,50%);}
 
 .buttons-container {
   display: grid;
-  border:1px solid black;
   grid-template-columns: repeat(auto-fit, 200px);
   grid-gap: 100px;
   margin-top:50px;
+  margin-left:15%;
 }
+
 .table-button {
-  border: 1px solid black;
   padding: 10px;
   text-align: center;
+  border-radius: 10px;
+  background-color: hsl(150, 50%,50%);
 }
 
 .table-button:hover {
-  background-color: #ddd;
+  background-color: hsl(150, 50%,20%);
+  color:white;
 }
 
 .add-row-form {
-  border: 1px solid black;
+  text-align: center;
+  position: relative;
+  padding:40px;
+}
+
+.add-row-submit {
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: hsl(150, 50%,50%);
+  margin: 50px auto 0px auto;
+  width:200px;
+}
+
+.add-row-submit:hover {
+  background-color: hsl(150, 50%,20%);
+  color:white;
 }

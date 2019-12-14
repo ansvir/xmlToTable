@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AppService} from '../service/app.service';
+import {Staff} from '../model/staff';
 
 @Component({
   selector: 'app-table',
@@ -6,9 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
-
-  company = {
-    staff: [
+    staff = [
     {
       id: 1,
       firstname: "Hamid",
@@ -29,20 +29,55 @@ export class TableComponent implements OnInit {
       lastname: "gggg",
       email: "222222@company.com",
       salary: 400000
+    },
+    {
+      id: 5,
+      firstname: "ddddd",
+      lastname: "eeeee",
+      email: "444444@company.com",
+      salary: 1000000
     }
-  ]
-};
-  properties = Object.keys(this.company[Object.keys(this.company)][0]);
-//   // Step 1. Get all the object keys.
-//   evilResponseProps = Object.keys(this.company);
-// // Step 2. Create an empty array.
-//   goodResponse = [];
-// // Step 3. Iterate throw all keys.
-//   for(prop of evilResponseProps) {
-//   goodResponse.push(evilResponseProps[prop]);
-//   }
-  constructor() { }
+  ];
+    staff2: Staff[];
+    properties2;
+  properties = Object.keys(this.staff[0]);
+  xmlPath;
+  addTitle;
+  addFormStatus;
+  savedStatus;
+  constructor(private appService: AppService) { }
   ngOnInit() {
+    this.addTitle = "Show form";
+    this.addFormStatus = false;
+    console.log(this.staff);
+    console.log(this.properties);
+  }
+  addForm() {
+    this.addFormStatus = !this.addFormStatus;
+    if (this.addFormStatus === true) {
+      this.addTitle = "Hide form";
+      this.savedStatus = "";
+    } else {
+      this.addTitle = "Show form";
+      this.savedStatus = "";
+    }
+  }
+  addRow() {
+    this.savedStatus = "Successfully added";
+  }
+  async loadXml() {
+      try {
+        await this.appService.getStaff(this.xmlPath)
+          .toPromise()
+          .then((data: Staff[]) => {
+            for (const value of data) {
+              this.staff2 = data;
+              console.log(data);
+            }
+          });
+      } catch (exception) {
+        console.log(exception);
+      }
   }
 
 }

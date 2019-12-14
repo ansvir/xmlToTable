@@ -1,28 +1,32 @@
-<div class="xml-form">
-  <div class="xml-title">Choose XML</div>
-  <input class="xml-input" type="text">
-  <div class="xml-button">Загрузить</div>
-</div>
-<hr class="xml-hr">
-<table>
-  <tr class="table-header">
-    <th *ngFor="let column of properties">
-      {{column.toUpperCase()}}
-    </th>
-  </tr>
-  <tr class="table-rows" *ngFor="let member of company.staff">
-    <td *ngFor="let prop of properties">
-      {{member[prop]}}
-    </td>
-  </tr>
-</table>
-<div class="buttons-container">
-  <div class="table-button">Добавить</div>
-  <div class="table-button">Удалить</div>
-  <div class="table-button">Сохранить</div>
-</div>
-<div class="add-row-form">
-  <div *ngFor="let column of properties">
-    {{column}}:<input type="text">
+<div class="main-form">
+  <div class="xml-form">
+    <div class="xml-title">Choose XML</div>
+    <input class="xml-input" type="text" name="xmlPath" [(ngModel)]="xmlPath" placeholder="Enter file path" autofocus>
+    <div class="xml-button" (click)="loadXml()">Load</div>
+  </div>
+  <hr class="xml-hr">
+  <table>
+    <tr class="table-header">
+      <th *ngFor="let column of properties">
+        {{column.toUpperCase()}}
+      </th>
+    </tr>
+    <tr class="table-rows" *ngFor="let member of staff">
+      <td *ngFor="let prop of properties">
+        {{member[prop]}}
+      </td>
+    </tr>
+  </table>
+  <div class="buttons-container">
+    <div class="table-button" (click)="addForm()">{{addTitle}}</div>
+    <div class="table-button">Delete</div>
+    <div class="table-button">Save</div>
+  </div>
+  <div class="add-row-form" [hidden]="!addFormStatus">
+    <div *ngFor="let column of properties">
+      {{column}}:<input type="text">
+    </div>
+    <div class="add-row-submit" (click)="addRow()">Submit</div>
+    <div style="margin-top:10px">{{savedStatus}}</div>
   </div>
 </div>
