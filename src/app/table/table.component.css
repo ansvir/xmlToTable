@@ -1,0 +1,71 @@
+.xml-form {
+  text-align:center;
+  padding-bottom: 50px;
+  padding-top:50px;
+}
+
+.xml-title {
+  font-size: 20px;
+  margin-bottom:20px
+}
+
+.xml-input {
+  margin-bottom:20px;
+  width:40%;
+}
+
+.xml-button {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+  width:200px;
+  margin: auto;
+}
+
+.xml-button:hover {
+  background-color: #ddd;
+}
+
+.xml-hr {
+  margin-bottom: 40px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td, th {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+.table-rows:hover {background-color: #ddd;}
+
+.table-header {background-color:hsl(150,50%,80%);}
+
+.buttons-container {
+  display: grid;
+  border:1px solid black;
+  grid-template-columns: repeat(auto-fit, 200px);
+  grid-gap: 100px;
+  margin-top:50px;
+}
+.table-button {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+}
+
+.table-button:hover {
+  background-color: #ddd;
+}
+
+.add-row-form {
+  border: 1px solid black;
+}
