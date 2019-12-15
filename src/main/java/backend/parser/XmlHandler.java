@@ -32,6 +32,10 @@ public class XmlHandler extends DefaultHandler {
         return handler.getStaff();
     }
 
+    public File staffToXml(Staff[] staff) {
+        return new File("");
+    }
+
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         lastElementName=qName;

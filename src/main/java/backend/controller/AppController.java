@@ -34,7 +34,7 @@ public class AppController {
     @Autowired
     XmlHandler xh;
 
-    @RequestMapping(value="/xml", params="path", method = RequestMethod.GET)
+    @RequestMapping(value="/xml/getXml", params="path", method = RequestMethod.GET)
     public ResponseEntity<?> getStaff(@RequestParam("path") String filePath) {
         System.out.println(filePath);
         try {
@@ -46,15 +46,8 @@ public class AppController {
         }
     }
 
-    @RequestMapping(value="/xml/file", method=RequestMethod.POST)
-    public List<Staff> postStaff(@RequestBody String filePath) {
-        System.out.println(filePath);
-        try {
-            return xh.xmlToStaff(filePath);
-        }
-        catch (ParserConfigurationException | SAXException | IOException exc) {
-            exc.printStackTrace();
-            return null;
-        }
+    @RequestMapping(value="/xml/updateXml", params="path", method=RequestMethod.POST)
+    public ResponseEntity<?> postStaff(@RequestParam("path") String filePath, @RequestBody Staff[] staff) {
+        return new ResponseEntity<String>("1",HttpStatus.OK);
     }
 }

@@ -1,8 +1,10 @@
 package backend.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@XmlRootElement(name = "Company")
 public class Company {
 
     private List<Staff> staff;

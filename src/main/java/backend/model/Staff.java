@@ -1,17 +1,21 @@
 package backend.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "Staff")
 public class Staff {
 
     private Integer id;
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private String email;
     private Integer salary;
 
-    public Staff(Integer id, String firstName, String lastName, String email, Integer salary) {
+    public Staff(Integer id, String firstname, String lastname, String email, Integer salary) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.salary = salary;
     }
@@ -24,20 +28,20 @@ public class Staff {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getEmail() {
@@ -58,6 +62,6 @@ public class Staff {
 
     @Override
     public String toString() {
-        return this.id+" "+this.firstName+" "+this.lastName+" "+this.email+" "+this.salary;
+        return this.id+" "+this.firstname +" "+this.lastname +" "+this.email+" "+this.salary;
     }
 }
