@@ -1,7 +1,8 @@
 package backend.controller;
 
 import backend.model.Staff;
-import backend.parser.SaxParser;
+import backend.parser.XmlHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,16 +31,30 @@ public class AppController {
 //        this.company=company;
 //    }
 
+    @Autowired
+    XmlHandler xh;
+
     @RequestMapping(value="/xml", params="path", method = RequestMethod.GET)
     public ResponseEntity<?> getStaff(@RequestParam("path") String filePath) {
-        SaxParser sp=new SaxParser();
+        System.out.println(filePath);
         try {
-            System.out.println(filePath);
-            return new ResponseEntity<List<Staff>>(sp.xmlToStaff(filePath), HttpStatus.OK);
+            return new ResponseEntity<List<Staff>>(xh.xmlToStaff(filePath), HttpStatus.OK);
         }
         catch (ParserConfigurationException | SAXException | IOException exc) {
             exc.printStackTrace();
             return new ResponseEntity<String>("Error occurred", HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @RequestMapping(value="/xml/file", method=RequestMethod.POST)
+    public List<Staff> postStaff(@RequestBody String filePath) {
+        System.out.println(filePath);
+        try {
+            return xh.xmlToStaff(filePath);
+        }
+        catch (ParserConfigurationException | SAXException | IOException exc) {
+            exc.printStackTrace();
+            return null;
         }
     }
 }
