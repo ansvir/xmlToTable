@@ -18,14 +18,15 @@
       </td>
     </tr>
   </table>
+  <div style="margin-top: 10px; text-align: center">{{tableStatus}}</div>
   <div class="buttons-container">
     <div class="table-button" (click)="addForm()">{{addTitle}}</div>
-    <div class="table-button">Delete</div>
-    <div class="table-button">Save</div>
+    <div class="table-button" (click)="deleteRow()">Delete</div>
+    <div class="table-button" (click)="saveXml()">Save</div>
   </div>
   <div class="add-row-form" [hidden]="!addFormStatus">
-    <div *ngFor="let column of properties">
-      {{column}}:<input type="text">
+    <div *ngFor="let key of properties">
+      {{key}}:<input type="text" name="input" *ngIf="newRow!=null" [(ngModel)]="newRow[key]">
     </div>
     <div class="add-row-submit" (click)="addRow()">Submit</div>
     <div style="margin-top:10px">{{savedStatus}}</div>
