@@ -1,11 +1,15 @@
 package backend.parser;
 
+import backend.model.Company;
 import backend.model.Staff;
 import org.springframework.stereotype.Component;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -32,8 +36,13 @@ public class XmlHandler extends DefaultHandler {
         return handler.getStaff();
     }
 
-    public File staffToXml(Staff[] staff) {
-        return new File("");
+    public Company pojoToXml(List<Staff> staff, String filePath) throws JAXBException, IOException {
+        JAXBContext context = JAXBContext.newInstance(Company.class);
+        Marshaller mar= context.createMarshaller();
+        mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        Company c=new Company(staff);
+        mar.marshal(c, new File(filePath));
+        return c;
     }
 
     @Override

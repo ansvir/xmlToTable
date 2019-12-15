@@ -1,26 +1,26 @@
 package backend.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlElement;
 
-@XmlRootElement(name = "Staff")
 public class Staff {
 
-    private Integer id;
-    private String firstname;
-    private String lastname;
+    private int id;
+    private String firstName;
+    private String lastName;
     private String email;
-    private Integer salary;
+    private int salary;
 
-    public Staff(Integer id, String firstname, String lastname, String email, Integer salary) {
+    public Staff(int id, String firstName, String lastName, String email, int salary) {
         this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.salary = salary;
     }
 
-    public Integer getId() {
+    public Staff() {}
+
+    public int getId() {
         return id;
     }
 
@@ -28,20 +28,20 @@ public class Staff {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    @XmlElement(name="firstname")
+    public String getFirstName() { return firstName; }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    @XmlElement(name="lastname")
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -52,7 +52,7 @@ public class Staff {
         this.email = email;
     }
 
-    public Integer getSalary() {
+    public int getSalary() {
         return salary;
     }
 
@@ -62,6 +62,6 @@ public class Staff {
 
     @Override
     public String toString() {
-        return this.id+" "+this.firstname +" "+this.lastname +" "+this.email+" "+this.salary;
+        return this.id+" "+this.firstName +" "+this.lastName +" "+this.email+" "+this.salary;
     }
 }
