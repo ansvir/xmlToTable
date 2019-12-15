@@ -45,12 +45,14 @@ export class TableComponent implements OnInit {
   addTitle;
   addFormStatus;
   savedStatus;
+  xmlPathStatus;
   constructor(private appService: AppService) { }
   ngOnInit() {
     this.addTitle = "Show form";
     this.addFormStatus = false;
     console.log(this.staff);
     console.log(this.properties);
+    this.xmlPathStatus = "";
   }
   addForm() {
     this.addFormStatus = !this.addFormStatus;
@@ -66,18 +68,33 @@ export class TableComponent implements OnInit {
     this.savedStatus = "Successfully added";
   }
   async loadXml() {
-      try {
-        await this.appService.getStaff(this.xmlPath)
-          .toPromise()
-          .then((data: Staff[]) => {
-            for (const value of data) {
-              this.staff2 = data;
-              console.log(data);
-            }
-          });
-      } catch (exception) {
-        console.log(exception);
-      }
+    this.xmlPathStatus = "";
+    try {
+      await this.appService.getStaff(this.xmlPath)
+        .toPromise()
+        .then((data: Staff[]) => {
+          for (const value of data) {
+            this.staff2 = data;
+          }
+          console.log(data);
+        });
+      this.xmlPathStatus = "Successfully loaded";
+    } catch (exception) {
+      console.log(exception);
+      this.xmlPathStatus = "Incorrect file path";
+    }
+
+    // try {
+    //   await this.appService.postStaff(this.xmlPath)
+    //     .toPromise()
+    //     .then((data: Staff[]) => {
+    //             for (const value of data) {
+    //               console.log(data);
+    //             }
+    //           });
+    // } catch (exception) {
+    //   console.log(exception);
+    // }
   }
 
 }

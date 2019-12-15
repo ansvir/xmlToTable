@@ -9,11 +9,14 @@ export class AppService {
   constructor(private httpClient: HttpClient) { }
 
   getStaff(filePath: string) {
+    console.log(filePath);
+    return this.httpClient.get("http://localhost:8080/xml?path=" + filePath);
+  }
+  postStaff(filePath: string) {
     const backslashes = /\\/g;
-    if (filePath.match(backslashes).length !== 0) {
+    if (backslashes.test(filePath)) {
       filePath = filePath.replace(backslashes, "/");
     }
-    console.log(filePath);
-    return this.httpClient.get("localhost:8080/xml?=" + filePath);
+    return this.httpClient.post("http://localhost:8080/xml/file", filePath);
   }
 }

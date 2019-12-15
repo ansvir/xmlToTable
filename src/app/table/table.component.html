@@ -3,6 +3,7 @@
     <div class="xml-title">Choose XML</div>
     <input class="xml-input" type="text" name="xmlPath" [(ngModel)]="xmlPath" placeholder="Enter file path" autofocus>
     <div class="xml-button" (click)="loadXml()">Load</div>
+    <div style="margin-top:10px">{{xmlPathStatus}}</div>
   </div>
   <hr class="xml-hr">
   <table>
