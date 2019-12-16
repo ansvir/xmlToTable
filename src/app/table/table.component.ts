@@ -75,6 +75,7 @@ export class TableComponent implements OnInit {
         .toPromise()
         .then((data: Company) => {
         });
+      this.tableStatus = "Successfully saved";
     } catch (exc) {
       console.log(exc);
       this.tableStatus = "error occurred";
