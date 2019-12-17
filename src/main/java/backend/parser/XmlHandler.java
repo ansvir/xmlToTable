@@ -2,22 +2,14 @@ package backend.parser;
 
 import backend.model.Company;
 import backend.model.Staff;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +18,6 @@ import java.util.stream.Collectors;
 @Component
 public class XmlHandler extends DefaultHandler {
 
-    private List<Staff> staff=new ArrayList<>();
     private static final Logger LOG = Logger.getLogger(XmlHandler.class);
 
     public Company xmlToStaff(String path) throws JAXBException, IOException {
@@ -42,7 +33,6 @@ public class XmlHandler extends DefaultHandler {
         JAXBContext jaxbContext = JAXBContext.newInstance(Company.class);
         Unmarshaller unMar = jaxbContext.createUnmarshaller();
         Company c = (Company) unMar.unmarshal(file);
-        System.out.println(c.toString());
         return c;
     }
 
@@ -61,17 +51,4 @@ public class XmlHandler extends DefaultHandler {
 //        xmlMapper.writeValue(new File(filePath), c);
 //        return c;
 //    }
-
-    public List<Staff> getStaff() {
-        return this.staff;
-    }
-
-    public void setStaff(List<Staff> staff) {this.staff=staff;}
-
-    @Override
-    public String toString() {
-        return this.staff.stream()
-                .map(n -> String.valueOf(n))
-                .collect(Collectors.joining(", ", "{", "}"));
-    }
 }

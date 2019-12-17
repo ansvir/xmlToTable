@@ -3,6 +3,7 @@ package backend.controller;
 import backend.model.Company;
 import backend.model.Staff;
 import backend.parser.XmlHandler;
+import backend.regex.StaffRegex;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,16 @@ public class AppController {
     @RequestMapping(value="/xml/getXml", params="path", method = RequestMethod.GET)
     public Company getStaff(@RequestParam("path") String filePath) {
         try {
-            return xh.xmlToStaff(filePath);
+            Company c = xh.xmlToStaff(filePath);
+            if(StaffRegex.checkValidation(c.getStaff())) {
+                return c;
+            } else {
+                LOG.error("'Staff' didn't pass the validation");
+                return null;
+            }
         }
         catch (JAXBException | IOException exc) {
-            LOG.error(exc.toString());
+            LOG.error("JAXBException or IOException");
             return null;
         }
     }
@@ -36,7 +43,7 @@ public class AppController {
         try {
             return xh.pojoToXml(staff, filePath);
         } catch (JAXBException | IOException exc) {
-            LOG.error(exc.toString());
+            LOG.error("JAXBException or IOException");
             return null;
         }
     }

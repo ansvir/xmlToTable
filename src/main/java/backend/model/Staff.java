@@ -8,9 +8,9 @@ public class Staff {
     private String firstName;
     private String lastName;
     private String email;
-    private int salary;
+    private double salary;
 
-    public Staff(int id, String firstName, String lastName, String email, int salary) {
+    public Staff(int id, String firstName, String lastName, String email, double salary) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -52,16 +52,16 @@ public class Staff {
         this.email = email;
     }
 
-    public int getSalary() {
+    public double getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(double salary) {
         this.salary = salary;
     }
 
     @Override
     public String toString() {
-        return this.id+" "+this.firstName +" "+this.lastName +" "+this.email+" "+this.salary;
+        return "id: "+this.id+", firstName: "+this.firstName +", lastName: "+this.lastName +", email: "+this.email+", salary: "+this.salary;
     }
 }

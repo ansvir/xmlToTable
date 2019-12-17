@@ -30,8 +30,10 @@ public class Company {
 
     @Override
     public String toString() {
-        return this.staff.stream()
-                .map(n -> String.valueOf(n))
-                .collect(Collectors.joining(", ", "{", "}"));
+        String result="Staff:";
+        for(Staff s: staff) {
+            result+=s.toString()+"\n";
+        }
+        return result;
     }
 }
