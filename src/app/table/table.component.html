@@ -5,8 +5,14 @@
     <div class="xml-button" (click)="loadXml()">Load</div>
     <div style="margin-top:10px">{{xmlPathStatus}}</div>
   </div>
-  <hr class="xml-hr">
+  <hr class="xml-hr" *ngIf="xmlLoaded">
   <table>
+    <tr style="border: none; background: transparent">
+      <th style="border: none; background: transparent" *ngFor="let i of properties">
+        <span class="row-order" (click)="ascClicked(i)">&and;</span>
+        <span class="row-order" (click)="descClicked(i)">&or;</span>
+      </th>
+    </tr>
     <tr class="table-header">
       <th *ngFor="let column of properties">
         {{column.toUpperCase()}}
@@ -19,16 +25,27 @@
     </tr>
   </table>
   <div style="margin-top: 10px; text-align: center">{{tableStatus}}</div>
-  <div class="buttons-container">
+  <div class="buttons-container" *ngIf="xmlLoaded">
     <div class="table-button" (click)="addForm()">{{addTitle}}</div>
+    <div class="table-button" (click)="updateForm()">{{updateTitle}}</div>
     <div class="table-button" (click)="deleteRow()">Delete</div>
     <div class="table-button" (click)="saveXml()">Save</div>
   </div>
-  <div class="add-row-form" [hidden]="!addFormStatus">
-    <div *ngFor="let key of properties">
-      {{key}}:<input type="text" name="input" *ngIf="newRow!=null" [(ngModel)]="newRow[key]">
+  <div class="update-table-container" *ngIf="xmlLoaded">
+    <div class="row-form" *ngIf="addFormStatus">
+      <div *ngFor="let key of properties">
+        {{key}}:<input type="text" name="inputAddRow" *ngIf="newRow!=null" [(ngModel)]="newRow[key]">
+      </div>
+      <div class="row-submit" (click)="addRow()">Submit</div>
+      <div style="margin-top:10px">{{savedStatus}}</div>
     </div>
-    <div class="add-row-submit" (click)="addRow()">Submit</div>
-    <div style="margin-top:10px">{{savedStatus}}</div>
+    <div style="margin-top:10px; text-align: center" *ngIf="updateFormStatus&&currentSelected==undefined">Choose record</div>
+    <div class="row-form" *ngIf="updateFormStatus&&currentSelected!=undefined">
+      <div *ngFor="let key of properties">
+        {{key}}:<input type="text" name="inputUpdateRow" *ngIf="newRow!=null&&currentSelected!=undefined" [(ngModel)]="newRow[key]" [value]="staff[currentSelected][key]">
+      </div>
+      <div class="row-submit" (click)="updateRow()">Submit</div>
+      <div style="margin-top:10px">{{savedStatus}}</div>
+    </div>
   </div>
 </div>

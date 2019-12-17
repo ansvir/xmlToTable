@@ -45,6 +45,25 @@
   margin-bottom: 40px;
 }
 
+.row-order {
+  font-size:10px;
+  vertical-align: sub;
+  font-weight: bold;
+  border: 1px solid black;
+  margin-right: 2px;
+  padding: 2px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.row-order:hover {
+  background-color: darkslategrey;
+  color: white;
+}
+
 table {
   border-collapse: collapse;
   width: 80%;
@@ -99,13 +118,17 @@ tr:nth-child(odd){background-color: white;}
   background-color: lightblue !important;
 }
 
-.add-row-form {
+.update-table-container {
+  position: relative;
+}
+
+.row-form {
   text-align: center;
   position: relative;
   padding:40px;
 }
 
-.add-row-submit {
+.row-submit {
   padding: 10px;
   text-align: center;
   border-radius: 10px;
@@ -119,7 +142,7 @@ tr:nth-child(odd){background-color: white;}
   user-select: none;
 }
 
-.add-row-submit:hover {
+.row-submit:hover {
   background-color: hsl(150, 50%,20%);
   color:white;
 }
