@@ -2,18 +2,23 @@ package backend.parser;
 
 import backend.model.Company;
 import backend.model.Staff;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,78 +26,41 @@ import java.util.stream.Collectors;
 @Component
 public class XmlHandler extends DefaultHandler {
 
-    private String id, firstName, lastName, email, salary, lastElementName;
     private List<Staff> staff=new ArrayList<>();
-    private static final Logger log = Logger.getLogger(XmlHandler.class);
+    private static final Logger LOG = Logger.getLogger(XmlHandler.class);
 
-    public List<Staff> xmlToStaff(String path) throws ParserConfigurationException, SAXException, IOException {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        SAXParser parser = factory.newSAXParser();
-
-        XmlHandler handler=new XmlHandler();
-
-        parser.parse(new File(path), handler);
-
-        return handler.getStaff();
-    }
-
-//    public Company pojoToXml(List<Staff> staff, String filePath) throws JAXBException, IOException {
-//        JAXBContext context = JAXBContext.newInstance(Company.class);
-//        Marshaller mar= context.createMarshaller();
-//        mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-//        Company c=new Company(staff);
-//        mar.marshal(c, new File(filePath));
-//        return c;
-//    }
-
-    public Company pojoToXml(List<Staff> staff, String filePath) throws IOException {
+    public Company xmlToStaff(String path) throws JAXBException, IOException {
 //        XmlMapper xmlMapper = new XmlMapper();
-        ObjectMapper objectMapper =new ObjectMapper();
-        Company c = new Company(staff);
-        objectMapper.writeValue(new File(filePath), c);
+//        File file = new File(path);
+//        String xml="";
+//        BufferedReader br = new BufferedReader(new FileReader(file));
+//        String st;
+//        while ((st = br.readLine()) != null) xml+=st;
+//        System.out.println(xml);
+//        Company c = xmlMapper.readValue(file, Company.class);
+        File file = new File(path);
+        JAXBContext jaxbContext = JAXBContext.newInstance(Company.class);
+        Unmarshaller unMar = jaxbContext.createUnmarshaller();
+        Company c = (Company) unMar.unmarshal(file);
+        System.out.println(c.toString());
         return c;
     }
 
-    @Override
-    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        lastElementName=qName;
+    public Company pojoToXml(List<Staff> staff, String filePath) throws JAXBException, IOException {
+        JAXBContext context = JAXBContext.newInstance(Company.class);
+        Marshaller mar= context.createMarshaller();
+        mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        Company c=new Company(staff);
+        mar.marshal(c, new File(filePath));
+        return c;
     }
 
-    @Override
-    public void characters(char[] ch, int start, int length) throws SAXException {
-        String information = new String(ch, start, length);
-
-        information = information.replace("\n", "").trim();
-
-        if (!information.isEmpty()) {
-            if (lastElementName.equals("id"))
-                id = information;
-            if (lastElementName.equals("firstname"))
-                firstName= information;
-            if (lastElementName.equals("lastname"))
-                lastName = information;
-            if (lastElementName.equals("email"))
-                email = information;
-            if (lastElementName.equals("salary"))
-                salary = information;
-        }
-    }
-
-    @Override
-    public void endElement(String uri, String localName, String qName) throws SAXException {
-        if ( (id != null && !id.isEmpty()) &&
-                (firstName != null && !firstName.isEmpty()) &&
-                (lastName != null && !lastName.isEmpty()) &&
-                (email != null && !email.isEmpty()) &&
-                (salary != null && !salary.isEmpty())){
-                    staff.add(new Staff(Integer.parseInt(id), firstName, lastName, email, Integer.parseInt(salary)));
-                    id = null;
-                    firstName = null;
-                    lastName = null;
-                    email = null;
-                    salary = null;
-        }
-    }
+//    public Company pojoToXml(List<Staff> staff, String filePath) throws IOException {
+//        XmlMapper xmlMapper = new XmlMapper();
+//        Company c = new Company(staff);
+//        xmlMapper.writeValue(new File(filePath), c);
+//        return c;
+//    }
 
     public List<Staff> getStaff() {
         return this.staff;
