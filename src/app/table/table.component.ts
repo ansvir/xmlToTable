@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AppService} from '../service/app.service';
 import {Staff} from '../model/staff';
-import {Company} from '../model/Company';
+import {Company} from '../model/company';
 
 @Component({
   selector: 'app-table',
@@ -85,14 +85,13 @@ export class TableComponent implements OnInit {
   async loadXml() {
     this.tableStatus = "";
     this.xmlPathStatus = "";
+    this.staff = [];
     try {
       await this.appService.getStaff(this.xmlPath)
         .toPromise()
-        .then((data: Staff[]) => {
-          for (const value of data) {
-            this.staff = data;
-            this.properties = Object.keys(this.staff[0]);
-          }
+        .then((data: Company) => {
+          this.staff = data.staff;
+          this.properties = Object.keys(this.staff[0]);
         });
       this.xmlPathStatus = "Successfully loaded";
     } catch (exc) {
