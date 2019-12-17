@@ -58,13 +58,17 @@ td, th {
   text-align: center;
 }
 
+.table-rows {
+  cursor: default;
+}
+
 tr:nth-child(even){background-color: #f2f2f2;}
 
-tr:nth-child(odd):not(:first-child){background-color: white;}
+tr:nth-child(odd){background-color: white;}
 
 .table-rows:hover {background-color: #ddd;}
 
-.table-header {background-color:hsl(40,100%,50%);}
+.table-header {background-color:hsl(40,100%,50%) !important;}
 
 .buttons-container {
   display: grid;
@@ -89,6 +93,10 @@ tr:nth-child(odd):not(:first-child){background-color: white;}
 .table-button:hover {
   background-color: hsl(150, 50%,20%);
   color:white;
+}
+
+.row-selected {
+  background-color: lightblue !important;
 }
 
 .add-row-form {

@@ -12,7 +12,7 @@
         {{column.toUpperCase()}}
       </th>
     </tr>
-    <tr class="table-rows" *ngFor="let member of staff">
+    <tr class="table-rows" (click)="selectRow(i)" *ngFor="let member of staff; let i=index" [ngClass]="{'row-selected':rowsSelected[i]===true}">
       <td *ngFor="let prop of properties">
         {{member[prop]}}
       </td>
