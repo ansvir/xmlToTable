@@ -3,6 +3,7 @@ package backend.controller;
 import backend.model.Company;
 import backend.model.Staff;
 import backend.parser.XmlHandler;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,24 +22,26 @@ public class AppController {
     @Autowired
     XmlHandler xh;
 
+    private static final Logger log = Logger.getLogger(AppController.class);
+
     @RequestMapping(value="/xml/getXml", params="path", method = RequestMethod.GET)
-    public ResponseEntity<?> getStaff(@RequestParam("path") String filePath) {
+    public List<Staff> getStaff(@RequestParam("path") String filePath) {
         try {
-            return new ResponseEntity<List<Staff>>(xh.xmlToStaff(filePath), HttpStatus.OK);
+            return xh.xmlToStaff(filePath);
         }
         catch (ParserConfigurationException | SAXException | IOException exc) {
-            exc.printStackTrace();
-            return new ResponseEntity<String>("Error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error(exc.toString());
+            return null;
         }
     }
 
     @RequestMapping(value="/xml/updateXml", params="path", method=RequestMethod.POST)
-    public ResponseEntity<?> postStaff(@RequestParam("path") String filePath, @RequestBody List<Staff> staff) {
+    public Company postStaff(@RequestParam("path") String filePath, @RequestBody List<Staff> staff) {
         try {
-            return new ResponseEntity<Company>(xh.pojoToXml(staff, filePath), HttpStatus.OK);
-        } catch (JAXBException | IOException exc) {
-            exc.printStackTrace();
-            return new ResponseEntity<String>("error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+            return xh.pojoToXml(staff, filePath);
+        } catch (IOException exc) {
+            log.error(exc.toString());
+            return null;
         }
     }
 }

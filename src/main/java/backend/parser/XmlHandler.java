@@ -2,14 +2,13 @@ package backend.parser;
 
 import backend.model.Company;
 import backend.model.Staff;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -24,6 +23,7 @@ public class XmlHandler extends DefaultHandler {
 
     private String id, firstName, lastName, email, salary, lastElementName;
     private List<Staff> staff=new ArrayList<>();
+    private static final Logger log = Logger.getLogger(XmlHandler.class);
 
     public List<Staff> xmlToStaff(String path) throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -36,12 +36,20 @@ public class XmlHandler extends DefaultHandler {
         return handler.getStaff();
     }
 
-    public Company pojoToXml(List<Staff> staff, String filePath) throws JAXBException, IOException {
-        JAXBContext context = JAXBContext.newInstance(Company.class);
-        Marshaller mar= context.createMarshaller();
-        mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        Company c=new Company(staff);
-        mar.marshal(c, new File(filePath));
+//    public Company pojoToXml(List<Staff> staff, String filePath) throws JAXBException, IOException {
+//        JAXBContext context = JAXBContext.newInstance(Company.class);
+//        Marshaller mar= context.createMarshaller();
+//        mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+//        Company c=new Company(staff);
+//        mar.marshal(c, new File(filePath));
+//        return c;
+//    }
+
+    public Company pojoToXml(List<Staff> staff, String filePath) throws IOException {
+//        XmlMapper xmlMapper = new XmlMapper();
+        ObjectMapper objectMapper =new ObjectMapper();
+        Company c = new Company(staff);
+        objectMapper.writeValue(new File(filePath), c);
         return c;
     }
 
