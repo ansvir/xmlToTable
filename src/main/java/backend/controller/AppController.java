@@ -32,7 +32,7 @@ public class AppController {
                 return null;
             }
         }
-        catch (JAXBException | IOException exc) {
+        catch (JAXBException exc) {
             LOG.error("JAXBException or IOException");
             return null;
         }
@@ -42,7 +42,7 @@ public class AppController {
     public Company postStaff(@RequestParam("path") String filePath, @RequestBody List<Staff> staff) {
         try {
             return xh.pojoToXml(staff, filePath);
-        } catch (JAXBException | IOException exc) {
+        } catch (JAXBException exc) {
             LOG.error("JAXBException or IOException");
             return null;
         }

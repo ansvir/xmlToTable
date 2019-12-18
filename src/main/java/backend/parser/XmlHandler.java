@@ -20,23 +20,14 @@ public class XmlHandler extends DefaultHandler {
 
     private static final Logger LOG = Logger.getLogger(XmlHandler.class);
 
-    public Company xmlToStaff(String path) throws JAXBException, IOException {
-//        XmlMapper xmlMapper = new XmlMapper();
-//        File file = new File(path);
-//        String xml="";
-//        BufferedReader br = new BufferedReader(new FileReader(file));
-//        String st;
-//        while ((st = br.readLine()) != null) xml+=st;
-//        System.out.println(xml);
-//        Company c = xmlMapper.readValue(file, Company.class);
+    public Company xmlToStaff(String path) throws JAXBException {
         File file = new File(path);
         JAXBContext jaxbContext = JAXBContext.newInstance(Company.class);
         Unmarshaller unMar = jaxbContext.createUnmarshaller();
-        Company c = (Company) unMar.unmarshal(file);
-        return c;
+        return (Company) unMar.unmarshal(file);
     }
 
-    public Company pojoToXml(List<Staff> staff, String filePath) throws JAXBException, IOException {
+    public Company pojoToXml(List<Staff> staff, String filePath) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(Company.class);
         Marshaller mar= context.createMarshaller();
         mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -44,11 +35,4 @@ public class XmlHandler extends DefaultHandler {
         mar.marshal(c, new File(filePath));
         return c;
     }
-
-//    public Company pojoToXml(List<Staff> staff, String filePath) throws IOException {
-//        XmlMapper xmlMapper = new XmlMapper();
-//        Company c = new Company(staff);
-//        xmlMapper.writeValue(new File(filePath), c);
-//        return c;
-//    }
 }
