@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
 @Component
 public class XmlHandler extends DefaultHandler {
 
-    private static final Logger LOG = Logger.getLogger(XmlHandler.class);
-
     public Company xmlToStaff(String path) throws JAXBException {
         File file = new File(path);
         JAXBContext jaxbContext = JAXBContext.newInstance(Company.class);
